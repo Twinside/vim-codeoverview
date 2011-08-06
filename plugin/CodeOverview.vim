@@ -324,7 +324,6 @@ fun! CodeOverviewJumpToBufferLine() "{{{
 	let fileWindow = bufwinnr(bufnr(s:lastProcessedAsciiFile))
 	exec fileWindow . 'wincmd w'
 	exec lineNum
-	echo "Bong"
 endfunction "}}}
 
 " Set all the option for the code overview buffer, avoid
@@ -613,6 +612,11 @@ command! DumpAllColorSchemes call s:ConvertColorSchemeToColorConf()
 
 if s:friendProcess == '""' || s:overviewProcess == '""'
     echo "Can't find friend executables, aborting CodeOverview load"
+    finish
+endif
+
+if s:friendProcess =~ "\n" || s:overviewProcess =~ "\n"
+    echo "Duplicate installation detected, aborting"
     finish
 endif
 
